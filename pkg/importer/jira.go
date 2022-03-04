@@ -62,7 +62,7 @@ func (i *Importer) fetchCSVPageFromJIRA(url string, page int, pageSize int) ([][
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusOK {
-		result, err := parseCsv(resp.Body, true)
+		result, err := parseCsv(resp.Body, page != 0)
 		if err != nil {
 
 			return nil, errors.Because(err, nil, fmt.Sprintf("parsing csv from %s", url))
