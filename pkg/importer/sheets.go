@@ -19,7 +19,7 @@ func (i *Importer) putCsvsToSheet(ctx context.Context, spreadsheetUrl string, sh
 
 	match := googleSpreadsheetMatcher.FindStringSubmatch(spreadsheetUrl)
 	spreadsheetId := match[googleSpreadsheetMatcher.SubexpIndex("spreadsheetId")]
-	spreadsheetRange := fmt.Sprintf("%s!1:100000", sheetName);
+	spreadsheetRange := fmt.Sprintf("%s!1:%d", sheetName, len(data));
 
 	valueRange := sheets.ValueRange{
 		Values: data,
