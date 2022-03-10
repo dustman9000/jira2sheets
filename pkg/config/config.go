@@ -14,7 +14,7 @@ type Config struct {
 type Spreadsheet struct {
 	Url         string   `json:"url"`
 	SheetName   string   `json:"sheetName"`
-	JiraFilters []string `json:"jiraFilters"`
+	JiraFilter string `json:"jiraFilter"`
 }
 
 func ReadConfig(path string) (*Config, error) {

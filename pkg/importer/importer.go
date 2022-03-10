@@ -23,29 +23,26 @@ func (i *Importer) Run() error {
 	log := log.Default()
 	ctx := context.Background()
 	if i.Verbose {
-		log.Printf("config %v", i.Cfg)
+		log.Printf("config %+v", i.Cfg)
 	}
 	for _, spreadsheet := range i.Cfg.Spreadsheets {
 		if i.Verbose {
 			log.Printf("processing %s %s", spreadsheet.Url, spreadsheet.SheetName)
 		}
 		data := make([][]interface{}, 0)
-		for _, filterUrl := range spreadsheet.JiraFilters {
-			if i.Verbose {
-				log.Printf("processing %s", filterUrl)
-			}
-			csv, err := i.fetchCSVFromJIRA(filterUrl)
-			if err != nil {
-				return errors.Wrap(err)
-			}
-			if i.Verbose {
-				log.Printf("loaded data from jira")
-			}
-			// Put all the CSV exports into a single data structure
-			data = append(data, csv...)
+		if i.Verbose {
+			log.Printf("processing %s", spreadsheet.JiraFilter)
 		}
+		header, data, err := i.fetchCSVFromJIRA(spreadsheet.JiraFilter)
+		if err != nil {
+			return errors.Wrap(err)
+		}
+		if i.Verbose {
+			log.Printf("loaded data from jira")
+		}
+		// Put all the CSV exports into a single data structure
 		if len(data) > 0 {
-			err := i.putCsvsToSheet(ctx, spreadsheet.Url, spreadsheet.SheetName, data)
+			err := i.putCsvsToSheet(ctx, spreadsheet.Url, spreadsheet.SheetName, header, data)
 			if err != nil {
 				return errors.Wrap(err)
 			}
