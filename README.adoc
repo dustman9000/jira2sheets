@@ -1,0 +1,3 @@
+= jira2sheets
+
+A tool to query a JIRA filter & upload to Google Sheets.
