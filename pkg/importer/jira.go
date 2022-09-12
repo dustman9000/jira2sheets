@@ -3,12 +3,13 @@ package importer
 import (
 	"bytes"
 	"fmt"
-	"gopkg.in/errgo.v2/errors"
 	"io"
 	"log"
 	"net/http"
 	"regexp"
 	"text/template"
+
+	"gopkg.in/errgo.v2/errors"
 )
 
 var jiraFilterMatcher = regexp.MustCompile("^(?P<baseUrl>.*)\\/issues\\/\\?filter=(?P<filterId>\\d+)$")
@@ -92,7 +93,7 @@ func (i *Importer) fixPadding(headerRows [][]string, pages [][][]string) ([]inte
 				headerRowResult = append(headerRowResult, header)
 			}
 			if header != nextHeader {
-				colPadding = append(colPadding, maxColWidth[header] - colWidths[hr][header])
+				colPadding = append(colPadding, maxColWidth[header]-colWidths[hr][header])
 				if hr == 0 {
 					// pad out the header row with more of the same labels
 					for i := 0; i < colPadding[h]; i++ {
@@ -156,4 +157,31 @@ func (i *Importer) fetchCSVPageFromJIRA(url string, page int, pageSize int) ([]s
 	}
 
 	return nil, nil, fmt.Errorf("http error code %v %s %s", resp.StatusCode, resp.Status, string(bodyBytes))
+}
+
+func (i *Importer) fetchApiGet(endpointUrl string) ([]byte, error) {
+
+	req, err := http.NewRequest("GET", endpointUrl, nil)
+	if err != nil {
+		return nil, errors.Wrap(err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", i.JiraPat))
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, errors.Wrap(err)
+	}
+	defer resp.Body.Close()
+
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, errors.Wrap(err)
+	}
+
+	if resp.StatusCode == http.StatusOK {
+		return bodyBytes, nil
+	}
+
+	return nil, fmt.Errorf("http error code %v %s %s", resp.StatusCode, resp.Status, string(bodyBytes))
 }

@@ -2,3 +2,7 @@ spreadsheets:
   - url: https://docs.google.com/spreadsheets/d/1C9bGvXp0jMr0sfY2w9_OIfHd70YBf-Y8Sln02v7dFo0/edit#gid=0
     sheetName: "Test Sheet"
     jiraFilter: https://issues.redhat.com/issues/?filter=12391028
+activeSprintsSheet:
+  url: https://docs.google.com/spreadsheets/d/1C9bGvXp0jMr0sfY2w9_OIfHd70YBf-Y8Sln02v7dFo0/edit#gid=0
+  sheetName: "Active Sprints"
+  jiraEndpoint: https://issues.redhat.com/rest/agile/1.0/board/8806/sprint?state=active
