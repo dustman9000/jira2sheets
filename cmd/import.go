@@ -1,12 +1,13 @@
 package cmd
 
 import (
-	"github.com/pmuir/jira2sheets/pkg/config"
-	"github.com/pmuir/jira2sheets/pkg/importer"
-	"github.com/spf13/cobra"
-	"gopkg.in/errgo.v2/errors"
 	"log"
 	"os"
+
+	"github.com/bf2fc6cc711aee1a0c2a/jira2sheets/pkg/config"
+	"github.com/bf2fc6cc711aee1a0c2a/jira2sheets/pkg/importer"
+	"github.com/spf13/cobra"
+	"gopkg.in/errgo.v2/errors"
 )
 
 // importCmd represents the import command
@@ -14,7 +15,7 @@ var importCmd = &cobra.Command{
 	Use:   "import",
 	Short: "Run one or more JIRA filters to a google sheet",
 	Long:  ``,
-	RunE:   run,
+	RunE:  run,
 }
 
 func init() {
@@ -25,7 +26,7 @@ func init() {
 	importCmd.Flags().String("google-credentials-json", "", "The Google credentials.json, normally read from JIRA2SHEETS_GOOGLE_CREDENTIALS_JSON")
 }
 
-func run(cmd *cobra.Command, args []string) error{
+func run(cmd *cobra.Command, args []string) error {
 	verbose, err := cmd.Flags().GetBool("verbose")
 	if err != nil {
 		return errors.Wrap(err)
@@ -54,7 +55,7 @@ func run(cmd *cobra.Command, args []string) error{
 		Cfg:                   cfg,
 		JiraPat:               jiraPat,
 		GoogleCredentialsJson: googleCredentialsJson,
-		Verbose: verbose,
+		Verbose:               verbose,
 	}
 	err = importer.Run()
 	if err != nil {

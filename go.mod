@@ -1,6 +1,6 @@
-module github.com/pmuir/jira2sheets
+module github.com/bf2fc6cc711aee1a0c2a/jira2sheets
 
-go 1.17
+go 1.18
 
 require (
 	github.com/ghodss/yaml v1.0.0
