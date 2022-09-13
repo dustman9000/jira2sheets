@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/pmuir/jira2sheets/pkg/config"
+	"github.com/bf2fc6cc711aee1a0c2a/jira2sheets/pkg/config"
 	"gopkg.in/errgo.v2/errors"
 )
 
