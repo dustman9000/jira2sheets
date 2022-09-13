@@ -2,19 +2,27 @@ package config
 
 import (
 	"fmt"
+	"io/ioutil"
+
 	"github.com/ghodss/yaml"
 	"gopkg.in/errgo.v2/errors"
-	"io/ioutil"
 )
 
 type Config struct {
-	Spreadsheets []Spreadsheet `json:"spreadsheets"`
+	Spreadsheets       []Spreadsheet      `json:"spreadsheets"`
+	ActiveSprintsSheet ActiveSprintsSheet `json:"activeSprintsSheet,omitempty"`
 }
 
 type Spreadsheet struct {
-	Url         string   `json:"url"`
-	SheetName   string   `json:"sheetName"`
+	Url        string `json:"url"`
+	SheetName  string `json:"sheetName"`
 	JiraFilter string `json:"jiraFilter"`
+}
+
+type ActiveSprintsSheet struct {
+	Url          string `json:"url"`
+	SheetName    string `json:"sheetName"`
+	JiraEndpoint string `json:"jiraEndpoint"`
 }
 
 func ReadConfig(path string) (*Config, error) {
