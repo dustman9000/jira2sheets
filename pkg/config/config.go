@@ -9,8 +9,7 @@ import (
 )
 
 type Config struct {
-	Spreadsheets       []Spreadsheet      `json:"spreadsheets"`
-	ActiveSprintsSheet ActiveSprintsSheet `json:"activeSprintsSheet,omitempty"`
+	Spreadsheets []Spreadsheet `json:"spreadsheets"`
 }
 
 type Spreadsheet struct {

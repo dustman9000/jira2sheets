@@ -3,11 +3,12 @@ package importer
 import (
 	"context"
 	"fmt"
+	"log"
+	"regexp"
+
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 	"gopkg.in/errgo.v2/errors"
-	"log"
-	"regexp"
 )
 
 var googleSpreadsheetMatcher = regexp.MustCompile("^https:\\/\\/docs\\.google\\.com\\/spreadsheets\\/d\\/(?P<spreadsheetId>.*)\\/edit.*$")
@@ -50,9 +51,9 @@ func (i *Importer) putCsvsToSheet(ctx context.Context, spreadsheetUrl string, sh
 		spreadsheetRequest.Requests = append(spreadsheetRequest.Requests, &sheets.Request{
 			DeleteDimension: &sheets.DeleteDimensionRequest{
 				Range: &sheets.DimensionRange{
-					Dimension:       "ROWS",
-					SheetId:         sheetId,
-					StartIndex:      int64(len(data)+1),
+					Dimension:  "ROWS",
+					SheetId:    sheetId,
+					StartIndex: int64(len(data) + 1),
 				},
 			},
 		})
@@ -61,9 +62,9 @@ func (i *Importer) putCsvsToSheet(ctx context.Context, spreadsheetUrl string, sh
 		spreadsheetRequest.Requests = append(spreadsheetRequest.Requests, &sheets.Request{
 			DeleteDimension: &sheets.DeleteDimensionRequest{
 				Range: &sheets.DimensionRange{
-					Dimension:       "COLUMNS",
-					SheetId:         sheetId,
-					StartIndex:      int64(len(header)),
+					Dimension:  "COLUMNS",
+					SheetId:    sheetId,
+					StartIndex: int64(len(header)),
 				},
 			},
 		})
@@ -77,7 +78,7 @@ func (i *Importer) putCsvsToSheet(ctx context.Context, spreadsheetUrl string, sh
 	if err != nil {
 		return errors.Wrap(err)
 	}
-	if len(spreadsheetRequest.Requests) >0 {
+	if len(spreadsheetRequest.Requests) > 0 {
 		_, err = srv.Spreadsheets.BatchUpdate(spreadsheetId, &spreadsheetRequest).Do()
 		if err != nil {
 			return errors.Wrap(err)

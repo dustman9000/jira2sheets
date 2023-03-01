@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/bf2fc6cc711aee1a0c2a/jira2sheets/pkg/config"
-	"github.com/bf2fc6cc711aee1a0c2a/jira2sheets/pkg/importer"
+	"github.com/dustman9000/jira2sheets/pkg/config"
+	"github.com/dustman9000/jira2sheets/pkg/importer"
 	"github.com/spf13/cobra"
 	"gopkg.in/errgo.v2/errors"
 )

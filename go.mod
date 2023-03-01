@@ -1,4 +1,4 @@
-module github.com/bf2fc6cc711aee1a0c2a/jira2sheets
+module github.com/dustman9000/jira2sheets
 
 go 1.18
 
