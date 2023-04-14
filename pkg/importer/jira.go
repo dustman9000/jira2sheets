@@ -13,7 +13,9 @@ import (
 )
 
 var jiraFilterMatcher = regexp.MustCompile("^(?P<baseUrl>.*)\\/issues\\/\\?filter=(?P<filterId>\\d+)$")
-var jiraCsvUrlTmpl = template.Must(template.New("JiraCsvUrl").Parse("{{ .BaseUrl }}/sr/jira.issueviews:searchrequest-csv-current-fields/{{ .FilterId }}/SearchRequest-{{ .FilterId }}.csv"))
+
+// https://issues.redhat.com/sr/jira.issueviews:searchrequest-csv-current-fields/12410471/SearchRequest-12410471.csv?delimiter=%7C
+var jiraCsvUrlTmpl = template.Must(template.New("JiraCsvUrl").Parse("{{ .BaseUrl }}/sr/jira.issueviews:searchrequest-csv-current-fields/{{ .FilterId }}/SearchRequest-{{ .FilterId }}.csv?delimiter=%7C"))
 
 func (i *Importer) fetchCSVFromJIRA(filterUrl string) ([]interface{}, [][]interface{}, error) {
 	log := log.Default()
