@@ -2,12 +2,15 @@ package importer
 
 import (
 	"encoding/csv"
-	"gopkg.in/errgo.v2/errors"
 	"io"
+
+	"gopkg.in/errgo.v2/errors"
 )
 
 func parseCsv(data io.Reader) ([]string, [][]string, error) {
 	reader := csv.NewReader(data)
+	reader.Comma = '|'
+	reader.LazyQuotes = true
 	csv, err := reader.ReadAll()
 	if err != nil {
 		return nil, nil, errors.Wrap(err)

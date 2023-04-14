@@ -1,4 +1,4 @@
 spreadsheets:
   - url: https://docs.google.com/spreadsheets/d/1_XItv_INX8UUpA29e2GNnrvVUEdYQR43y1hLdIstonE/edit#gid=0
-    sheetName: "Q2"
-    jiraFilter: https://issues.redhat.com/issues/?filter=12400932
+    sheetName: "OSD/ROSA 2023Q2"
+    jiraFilter: https://issues.redhat.com/issues/?filter=12410471
